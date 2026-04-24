@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { verifyAdmin } from "@/lib/auth";
-import { getAllTokens, getTokenStats, initDb } from "@/lib/db";
+import { getAllTokens, getTokenStats, initDb, type Token, type TokenStats } from "@/lib/db";
 import { AdminDashboard } from "./dashboard";
 
 export const dynamic = "force-dynamic";

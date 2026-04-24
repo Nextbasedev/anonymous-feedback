@@ -1,5 +1,20 @@
 import { sql } from "@vercel/postgres";
 
+export interface Token {
+  id: number;
+  token: string;
+  email: string;
+  used: boolean;
+  created_at: string;
+  used_at: string | null;
+}
+
+export interface TokenStats {
+  total: number;
+  used: number;
+  pending: number;
+}
+
 export async function initDb() {
   await sql`
     CREATE TABLE IF NOT EXISTS tokens (
@@ -40,18 +55,18 @@ export async function burnToken(token: string) {
   `;
 }
 
-export async function getAllTokens() {
+export async function getAllTokens(): Promise<Token[]> {
   const result = await sql`
     SELECT * FROM tokens ORDER BY created_at DESC
   `;
-  return result.rows;
+  return result.rows as Token[];
 }
 
 export async function deleteToken(id: number) {
   await sql`DELETE FROM tokens WHERE id = ${id} AND used = FALSE`;
 }
 
-export async function getTokenStats() {
+export async function getTokenStats(): Promise<TokenStats> {
   const result = await sql`
     SELECT 
       COUNT(*) as total,
@@ -59,5 +74,5 @@ export async function getTokenStats() {
       COUNT(*) FILTER (WHERE used = FALSE) as pending
     FROM tokens
   `;
-  return result.rows[0];
+  return result.rows[0] as TokenStats;
 }

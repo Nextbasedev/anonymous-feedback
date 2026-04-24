@@ -12,13 +12,13 @@ interface Token {
   used_at: string | null;
 }
 
-interface Stats {
+interface TokenStats {
   total: number;
   used: number;
   pending: number;
 }
 
-export function AdminDashboard({ tokens, stats }: { tokens: Token[]; stats: Stats }) {
+export function AdminDashboard({ tokens, stats }: { tokens: Token[]; stats: TokenStats }) {
   const [emails, setEmails] = useState("");
   const [generating, setGenerating] = useState(false);
   const [copied, setCopied] = useState<string | null>(null);

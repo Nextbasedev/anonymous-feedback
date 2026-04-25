@@ -1,12 +1,12 @@
 import { validateToken, burnToken } from "@/lib/db";
-import { getFormUrl } from "@/lib/google-forms";
+import { getFormEmbedUrl } from "@/lib/google-forms";
 
 export const dynamic = "force-dynamic";
 
 export default async function FeedbackPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
   const tokenRow = await validateToken(token);
-  const formUrl = getFormUrl();
+  const formUrl = getFormEmbedUrl();
 
   if (!tokenRow) {
     return (
@@ -61,7 +61,7 @@ export default async function FeedbackPage({ params }: { params: Promise<{ token
         <iframe
           src={formUrl + "?embedded=true"}
           width="100%"
-          height="900"
+          height="1000"
           frameBorder={0}
           style={{ border: "none", display: "block" }}
           title="Feedback Form"
@@ -72,7 +72,7 @@ export default async function FeedbackPage({ params }: { params: Promise<{ token
 
       <div style={{ textAlign: "center", marginTop: "20px" }}>
         <p style={{ fontSize: "13px", color: "var(--ink-tertiary)" }}>
-          🔒 Powered by Google Forms. Responses are stored by Google, not by Nextbase directly.
+          🔒 Powered by Google Forms · Responses are stored by Google, not by Nextbase directly
         </p>
       </div>
     </div>
